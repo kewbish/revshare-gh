@@ -3,12 +3,19 @@
     "version": "0.1.0",
     "description": "A GitHub (Chrome) extension to implement Revshare.js and Web Monetization based on repo stars.",
     "homepage_url": "http://github.com/kewbish/revshare-crx",
-    "background": {
-        "scripts": [
-            "revshare-crx/background.js"
-        ],
-        "persistent": false
-    },
+    "permissions": [
+        "*://*.github.com/*"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*.github.com/*"
+            ],
+            "js": [
+                "revshare-crx/revshare.js"
+            ]
+        }
+    ],
     "browser_action": {},
     "manifest_version": 2
 }
