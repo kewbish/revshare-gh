@@ -14,7 +14,12 @@ if (hasSponsor) {
                 walletLinks.push(l.innerText);
             }
         });
+        const chosen = walletLinks[Math.floor(Math.random() * walletLinks.length)];
+        const monetizationTag = document.createElement('meta');
+        monetizationTag.name = 'monetization';
+        monetizationTag.content = chosen;
+        document.head.appendChild(monetizationTag);
     }).catch((err) => {
-        console.warn(`Revshare-CRX // Error: ${err}`);
+        console.error(`Revshare-CRX // Error: ${err}`);
     });
 }
