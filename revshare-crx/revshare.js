@@ -1,4 +1,8 @@
 const hasSponsor = document.getElementById("sponsor-button-repo");
+var starsOnly = false;
+chrome.storage.sync.get("starsOnly", (val) => {
+    starsOnly = val;
+});
 if (hasSponsor) {
     console.log("Revshare-CRX // Sponsored.");
     const fundingUrl = `${location.href.split("/").splice(0, 5).join("/")}/funding_links?fragment=1`;
