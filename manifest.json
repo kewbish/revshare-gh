@@ -5,6 +5,7 @@
     "homepage_url": "http://github.com/kewbish/revshare-crx",
     "permissions": [
         "activeTab",
+        "storage",
         "*://*.github.com/*"
     ],
     "content_scripts": [
