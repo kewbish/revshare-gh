@@ -3,6 +3,11 @@ var starsOnly = false;
 chrome.storage.sync.get("starsOnly", (v) => {
     starsOnly = v.starsOnly;
 });
+if (starsOnly) {
+    console.log("Revshare-CRX // Stars only.");
+    var starredObj = document.querySelectorAll(".js-toggler-container.js-social-container.starring-container");
+    console.log(starredObj);
+}
 if (hasSponsor) {
     console.log("Revshare-CRX // Sponsored.");
     const fundingUrl = `${location.href.split("/").splice(0, 5).join("/")}/funding_links?fragment=1`;

@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function setStar() {
     const checked = document.getElementById("stars-only");
+    console.log(checked.checked);
     chrome.storage.sync.set({ starsOnly: checked.checked }, () => {
     });
 }
