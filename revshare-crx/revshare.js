@@ -1,7 +1,7 @@
 const hasSponsor = document.getElementById("sponsor-button-repo");
 var starsOnly = false;
-chrome.storage.sync.get("starsOnly", (val) => {
-    starsOnly = val;
+chrome.storage.sync.get("starsOnly", (v) => {
+    starsOnly = v.starsOnly;
 });
 if (hasSponsor) {
     console.log("Revshare-CRX // Sponsored.");
