@@ -29,7 +29,7 @@ if (hasSponsor) {
             starredObj = starredObj[0].innerText.split("\n")[0].trim();
             // either 'unstar', therefore starred, or 'star', therefore unstarred
         }
-        if (starsOnly && starredObj == "Unstar" || !starsOnly) {
+        if ((starsOnly && starredObj == "Unstar" || !starsOnly) && walletLinks.length > 0) {
             const chosen = walletLinks[Math.floor(Math.random() * walletLinks.length)];
             const monetizationTag = document.createElement('meta');
             monetizationTag.name = 'monetization';
