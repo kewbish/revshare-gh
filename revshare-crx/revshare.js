@@ -2,12 +2,8 @@ const hasSponsor = document.getElementById("sponsor-button-repo");
 var starsOnly = false;
 chrome.storage.sync.get("starsOnly", (v) => {
     starsOnly = v.starsOnly;
+    console.log("Revshare-CRX // Executed.");
 });
-if (starsOnly) {
-    console.log("Revshare-CRX // Stars only.");
-    var starredObj = document.querySelectorAll(".js-toggler-container.js-social-container.starring-container");
-    console.log(starredObj);
-}
 if (hasSponsor) {
     console.log("Revshare-CRX // Sponsored.");
     const fundingUrl = `${location.href.split("/").splice(0, 5).join("/")}/funding_links?fragment=1`;
@@ -27,7 +23,14 @@ if (hasSponsor) {
         const monetizationTag = document.createElement('meta');
         monetizationTag.name = 'monetization';
         monetizationTag.content = chosen;
-        document.head.appendChild(monetizationTag);
+        if (starsOnly) {
+            console.log("Revshare-CRX // Stars only.");
+            var starredObj = document.getElementsByClassName("js-toggler-container js-social-container starring-container");
+            starredObj = starredObj[0].innerText.split("\n")[0].trim();
+        }
+        if (starsOnly && starredObj == "Unstar" || !starsOnly) {
+            document.head.appendChild(monetizationTag);
+        }
     }).catch((err) => {
         console.error(`Revshare-CRX // Error: ${err}`);
     });
