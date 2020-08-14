@@ -21,5 +21,10 @@
     "browser_action": {
         "default_popup": "revshare-crx/popup.html"
     },
+    "icons": {
+        "16": "revshare-crx/icons/icon16.png",
+        "48": "revshare-crx/icons/icon48.png",
+        "128": "revshare-crx/icons/icon128.png"
+    },
     "manifest_version": 2
 }

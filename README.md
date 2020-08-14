@@ -1,3 +1,5 @@
+<div style="margin: 0 auto;text-align:center;"><img src="revshare-crx/icons/icon128.png"></div>
+
 # Revshare.js for GitHub
 A GitHub (Chrome) extension to implement Revshare.js and Web Monetization based on repo stars.  
 Made in JavaScript, August 2020 for [CS50](https://cs50.harvard.edu).  
