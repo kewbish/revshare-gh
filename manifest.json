@@ -15,6 +15,7 @@
             ],
             "js": [
                 "revshare-crx/revshare.js",
+                "revshare-crx/key.js"
             ]
         }
     ],

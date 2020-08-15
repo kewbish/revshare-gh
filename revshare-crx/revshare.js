@@ -1,4 +1,3 @@
-import { key } from "./key.js";
 const hasSponsor = document.getElementById("sponsor-button-repo");
 var starsOnly = false;
 chrome.storage.sync.get("starsOnly", (v) => {
@@ -7,7 +6,8 @@ chrome.storage.sync.get("starsOnly", (v) => {
 });
 if (hasSponsor) {
     console.log("Revshare-CRX // Sponsored.");
-    const fundingUrl = `${location.href.split("/").splice(0, 5).join("/")}/funding_links?fragment=1`;
+    const url = window.location.href.toString();
+    const fundingUrl = `${url.split("/").splice(0, 5).join("/")}/funding_links?fragment=1`;
     // fetch url for fragment page including all funding links
     fetch(fundingUrl).then((res) => {
         return res.text();
@@ -26,11 +26,11 @@ if (hasSponsor) {
         });
         fetch('https://api.github.com/graphql', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Accept': 'application/vnd.github.hawkgirl-preview+json', 'Authorization': `Bearer ${key}` },
-            body: JSON.stringify({ query: `{ repository(name: "${url[4]}", owner: "${url[3]}") {id} }` }),
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/vnd.github.hawkgirl-preview+json', 'Authorization': `Bearer ${globalThis.key}` },
+            body: JSON.stringify({ query: `{ repository(name: "${url.split("/")[4]}", owner: "${url.split("/")[3]}") {dependencyGraphManifests {totalCount}} }` }),
         })
             .then(res => res.json())
-            .then(res => console.log("Revshare-CRX // " + res.data));
+            .then(res => console.log(res));
         if (starsOnly) {
             console.log("Revshare-CRX // Stars only.");
             var starredObj = document.getElementsByClassName("js-toggler-container js-social-container starring-container");
