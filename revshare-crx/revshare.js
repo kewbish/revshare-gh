@@ -24,13 +24,6 @@ if (hasSponsor) {
                 // if matches the wallet pointer format
             }
         });
-        fetch('https://api.github.com/graphql', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Accept': 'application/vnd.github.hawkgirl-preview+json', 'Authorization': `Bearer ${globalThis.key}` },
-            body: JSON.stringify({ query: `{ repository(name: "${url.split("/")[4]}", owner: "${url.split("/")[3]}") {dependencyGraphManifests {totalCount}} }` }),
-        })
-            .then(res => res.json())
-            .then(res => console.log(res));
         if (starsOnly) {
             console.log("Revshare-CRX // Stars only.");
             var starredObj = document.getElementsByClassName("js-toggler-container js-social-container starring-container");
@@ -45,6 +38,16 @@ if (hasSponsor) {
             document.head.appendChild(monetizationTag);
             // form meta tag, and append
         }
+        fetch('https://api.github.com/graphql', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/vnd.github.hawkgirl-preview+json', 'Authorization': `Bearer ${globalThis.key}` },
+            body: JSON.stringify({ query: `{ repository(name: "${url.split("/")[4]}", owner: "${url.split("/")[3]}") {dependencyGraphManifests { nodes { dependencies { nodes { repository { fundingLinks { url } } } } } } } }` }),
+        })
+            .then(res => res.json())
+            .then(res => {
+                console.log("Revshare-CRX // Data: ", res);
+            })
+            .catch(err => console.error(`Revshare-CRX // Error: ${err}`));
     }).catch((err) => {
         console.error(`Revshare-CRX // Error: ${err}`);
     });
