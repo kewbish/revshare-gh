@@ -23,6 +23,13 @@ if (hasSponsor) {
                 // if matches the wallet pointer format
             }
         });
+        fetch('https://api.github.com/graphql', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/vnd.github.hawkgirl-preview+json' },
+            body: JSON.stringify({ query: `{ repository(name: "${url[4]}", owner: "${url[3]}") {id} }` }),
+        })
+            .then(res => res.json())
+            .then(res => console.log("Revshare-CRX // " + res.data));
         if (starsOnly) {
             console.log("Revshare-CRX // Stars only.");
             var starredObj = document.getElementsByClassName("js-toggler-container js-social-container starring-container");
