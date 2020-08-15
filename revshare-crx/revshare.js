@@ -1,3 +1,4 @@
+import { key } from "./key.js";
 const hasSponsor = document.getElementById("sponsor-button-repo");
 var starsOnly = false;
 chrome.storage.sync.get("starsOnly", (v) => {
@@ -25,7 +26,7 @@ if (hasSponsor) {
         });
         fetch('https://api.github.com/graphql', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Accept': 'application/vnd.github.hawkgirl-preview+json' },
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/vnd.github.hawkgirl-preview+json', 'Authorization': `Bearer ${key}` },
             body: JSON.stringify({ query: `{ repository(name: "${url[4]}", owner: "${url[3]}") {id} }` }),
         })
             .then(res => res.json())
