@@ -46,6 +46,28 @@ if (hasSponsor) {
             .then(res => res.json())
             .then(res => {
                 console.log("Revshare-CRX // Data: ", res);
+                const allDepNodes = res.data.repository.dependencyGraphManifests.nodes;
+                var allDepUrlLists = [];
+                allDepNodes.forEach((el) => {
+                    allDepUrlLists.push(el.dependencies.nodes);
+                });
+                console.log(allDepUrlLists);
+                var allDepUrlNodes = [];
+                allDepUrlLists.forEach((el) => {
+                    el.forEach((subEl) => {
+                        if (subEl.repository != null) {
+                            allDepUrlNodes.push(subEl.repository.fundingLinks);
+                        }
+                    })
+                });
+                var allDepUrls = [];
+                allDepUrlNodes.forEach((el) => {
+                    el.forEach((subEl) => {
+                        if (subEl.url.startsWith("$")) {
+                            allDepUrls.push(subEl.url);
+                        }
+                    });
+                });
             })
             .catch(err => console.error(`Revshare-CRX // Error: ${err}`));
     }).catch((err) => {
