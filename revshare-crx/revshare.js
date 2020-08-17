@@ -47,6 +47,25 @@ if (hasSponsor) {
             .then(res => {
                 console.log("Revshare-CRX // Data: ", res);
                 const allDepNodes = res.data.repository.dependencyGraphManifests.nodes;
+                // allDepNodes.forEach((el) => {
+                //     allDepUrlLists = el.dependencies.nodes;
+                //     allDepUrlNodes = [];
+                //     allDepUrlLists.forEach((el) => {
+                //         el.forEach((subEl) => {
+                //             if (subEl.repository != null) {
+                //                 allDepUrlNodes.push(subEl.repository.fundingLinks);
+                //             }
+                //         });
+                //     });
+                // });
+                // var allDepUrls = [];
+                // allDepUrlNodes.forEach((el) => {
+                //     el.forEach((subEl) => {
+                //         if (subEl.url.startsWith("$")) {
+                //             allDepUrls.push(subEl.url);
+                //         }
+                //     });
+                // });
                 var allDepUrlLists = [];
                 allDepNodes.forEach((el) => {
                     allDepUrlLists.push(el.dependencies.nodes);
