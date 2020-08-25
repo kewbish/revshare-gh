@@ -81,23 +81,26 @@ if (hasSponsor) {
                             }
                         });
                     });
+                    if (allDepUrls.length > 0) {
+                        const chosen = allDepUrls[Math.floor(Math.random() * allDepUrls.length)];
+                        createMeta(chosen);
+                    }
                 })
                 .catch(err => console.error(`Revshare-CRX // Error: ${err}`));
         }
-        if (allDepUrls.length > 0 || walletLinks.length > 0) {
-            if (sponsorMeta && allDepUrls.length > 0) {
-                chosen = allDepUrls[Math.floor(Math.random() * allDepUrls.length)];
-            }
-            else if ((starsOnly && starredObj == "Unstar" || !starsOnly) && walletLinks.length > 0) {
-                chosen = walletLinks[Math.floor(Math.random() * walletLinks.length)];
-            }
-            const monetizationTag = document.createElement('meta');
-            monetizationTag.name = 'monetization';
-            monetizationTag.content = chosen;
-            document.head.appendChild(monetizationTag);
-            // form meta tag, and append
+        else if ((starsOnly && starredObj == "Unstar" || !starsOnly) && walletLinks.length > 0) {
+            chosen = walletLinks[Math.floor(Math.random() * walletLinks.length)];
+            createMeta(chosen);
         }
     }).catch((err) => {
         console.error(`Revshare-CRX // Error: ${err}`);
     });
+}
+
+function createMeta(chosen) {
+    const monetizationTag = document.createElement('meta');
+    monetizationTag.name = 'monetization';
+    monetizationTag.content = chosen;
+    document.head.appendChild(monetizationTag);
+    // form meta tag, and append
 }
