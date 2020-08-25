@@ -14,8 +14,8 @@
                 "*://*.github.com/*/*"
             ],
             "js": [
-                "revshare-crx/revshare.js",
-                "revshare-crx/key.js"
+                "revshare-crx/key.js",
+                "revshare-crx/revshare.js"
             ]
         }
     ],

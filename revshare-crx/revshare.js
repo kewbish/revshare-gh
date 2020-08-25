@@ -7,20 +7,19 @@ chrome.storage.sync.get("starsOnly", (v) => {
 if (hasSponsor) {
     console.log("Revshare-CRX // Sponsored.");
     const url = window.location.href.toString();
-    const fundingUrl = `${url.split("/").splice(0, 5).join("/")}/funding_links?fragment=1`;
     // fetch url for fragment page including all funding links
-    fetch(fundingUrl).then((res) => {
-        return res.text();
-    }).then((html) => {
-        const parser = new DOMParser();
-        const htmlNodes = parser.parseFromString(html, 'text/html');
-        // create node tree from text of fetched page
-        const links = htmlNodes.querySelectorAll(".d-flex.mb-3>.flex-auto.min-width-0>a");
+    fetch('https://api.github.com/graphql', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${globalThis.key}` },
+        body: JSON.stringify({ query: `{ repository(name: "${url.split("/")[4]}", owner: "${url.split("/")[3]}")  { fundingLinks { url } } }` }),
+    }).then((res) => res.json()
+    ).then((res) => {
+        const links = res.data.repository.fundingLinks;
         // select each link
         var walletLinks = [];
         links.forEach((l) => {
-            if (l.innerText.startsWith("$")) {
-                walletLinks.push(l.innerText);
+            if (l.url.startsWith("$")) {
+                walletLinks.push(l.url);
                 // if matches the wallet pointer format
             }
         });
@@ -31,6 +30,7 @@ if (hasSponsor) {
             // either 'unstar', therefore starred, or 'star', therefore unstarred
         }
         const sponsorMeta = Math.round(Math.random());
+        console.log(sponsorMeta);
         if (sponsorMeta) {
             fetch('https://api.github.com/graphql', {
                 method: 'POST',
@@ -64,7 +64,6 @@ if (hasSponsor) {
                     allDepNodes.forEach((el) => {
                         allDepUrlLists.push(el.dependencies.nodes);
                     });
-                    console.log(allDepUrlLists);
                     var allDepUrlNodes = [];
                     allDepUrlLists.forEach((el) => {
                         el.forEach((subEl) => {
