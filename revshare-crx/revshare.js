@@ -30,7 +30,6 @@ if (hasSponsor) {
             // either 'unstar', therefore starred, or 'star', therefore unstarred
         }
         const sponsorMeta = Math.round(Math.random());
-        console.log(sponsorMeta);
         if (sponsorMeta) {
             fetch('https://api.github.com/graphql', {
                 method: 'POST',
@@ -41,62 +40,46 @@ if (hasSponsor) {
                 .then(res => {
                     console.log("Revshare-CRX // Data: ", res);
                     const allDepNodes = res.data.repository.dependencyGraphManifests.nodes;
-                    // allDepNodes.forEach((el) => {
-                    //     allDepUrlLists = el.dependencies.nodes;
-                    //     allDepUrlNodes = [];
-                    //     allDepUrlLists.forEach((el) => {
-                    //         el.forEach((subEl) => {
-                    //             if (subEl.repository != null) {
-                    //                 allDepUrlNodes.push(subEl.repository.fundingLinks);
-                    //             }
-                    //         });
-                    //     });
-                    // });
-                    // var allDepUrls = [];
-                    // allDepUrlNodes.forEach((el) => {
-                    //     el.forEach((subEl) => {
-                    //         if (subEl.url.startsWith("$")) {
-                    //             allDepUrls.push(subEl.url);
-                    //         }
-                    //     });
-                    // });
-                    var allDepUrlLists = [];
-                    allDepNodes.forEach((el) => {
-                        allDepUrlLists.push(el.dependencies.nodes);
-                    });
-                    var allDepUrlNodes = [];
-                    allDepUrlLists.forEach((el) => {
-                        el.forEach((subEl) => {
-                            if (subEl.repository != null) {
-                                allDepUrlNodes.push(subEl.repository.fundingLinks);
-                            }
-                        })
-                    });
-                    var allDepUrls = [];
-                    allDepUrlNodes.forEach((el) => {
-                        el.forEach((subEl) => {
-                            if (subEl.url.startsWith("$")) {
-                                allDepUrls.push(subEl.url);
-                            }
+                    if (allDepNodes.length > 0) {
+                        allDepNodes.forEach((el) => {
+                            allDepUrlLists = el.dependencies.nodes;
+                            allDepUrlNodes = [];
+                            allDepUrlLists.forEach((el) => {
+                                el.forEach((subEl) => {
+                                    if (subEl.repository != null) {
+                                        allDepUrlNodes.push(subEl.repository.fundingLinks);
+                                    }
+                                });
+                            });
                         });
-                    });
-                    if (allDepUrls.length > 0) {
-                        const chosen = allDepUrls[Math.floor(Math.random() * allDepUrls.length)];
-                        createMeta(chosen);
+                        var allDepUrls = [];
+                        allDepUrlNodes.forEach((el) => {
+                            el.forEach((subEl) => {
+                                if (subEl.url.startsWith("$")) {
+                                    allDepUrls.push(subEl.url);
+                                }
+                            });
+                        });
+                    }
+                    if (allDepUrls) {
+                        createMeta(allDepUrls);
+                    }
+                    else if ((starsOnly && starredObj == "Unstar" || !starsOnly) && walletLinks.length > 0) {
+                        createMeta(walletLinks);
                     }
                 })
                 .catch(err => console.error(`Revshare-CRX // Error: ${err}`));
         }
         else if ((starsOnly && starredObj == "Unstar" || !starsOnly) && walletLinks.length > 0) {
-            chosen = walletLinks[Math.floor(Math.random() * walletLinks.length)];
-            createMeta(chosen);
+            createMeta(walletLinks);
         }
     }).catch((err) => {
         console.error(`Revshare-CRX // Error: ${err}`);
     });
 }
 
-function createMeta(chosen) {
+function createMeta(array) {
+    const chosen = array[Math.floor(Math.random() * array.length)];
     const monetizationTag = document.createElement('meta');
     monetizationTag.name = 'monetization';
     monetizationTag.content = chosen;
