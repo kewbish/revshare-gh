@@ -30,65 +30,73 @@ if (hasSponsor) {
             starredObj = starredObj[0].innerText.split("\n")[0].trim();
             // either 'unstar', therefore starred, or 'star', therefore unstarred
         }
-        if ((starsOnly && starredObj == "Unstar" || !starsOnly) && walletLinks.length > 0) {
-            const chosen = walletLinks[Math.floor(Math.random() * walletLinks.length)];
+        const sponsorMeta = Math.round(Math.random());
+        if (sponsorMeta) {
+            fetch('https://api.github.com/graphql', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/vnd.github.hawkgirl-preview+json', 'Authorization': `Bearer ${globalThis.key}` },
+                body: JSON.stringify({ query: `{ repository(name: "${url.split("/")[4]}", owner: "${url.split("/")[3]}") {dependencyGraphManifests { nodes { dependencies { nodes { repository { fundingLinks { url } } } } } } } }` }),
+            })
+                .then(res => res.json())
+                .then(res => {
+                    console.log("Revshare-CRX // Data: ", res);
+                    const allDepNodes = res.data.repository.dependencyGraphManifests.nodes;
+                    // allDepNodes.forEach((el) => {
+                    //     allDepUrlLists = el.dependencies.nodes;
+                    //     allDepUrlNodes = [];
+                    //     allDepUrlLists.forEach((el) => {
+                    //         el.forEach((subEl) => {
+                    //             if (subEl.repository != null) {
+                    //                 allDepUrlNodes.push(subEl.repository.fundingLinks);
+                    //             }
+                    //         });
+                    //     });
+                    // });
+                    // var allDepUrls = [];
+                    // allDepUrlNodes.forEach((el) => {
+                    //     el.forEach((subEl) => {
+                    //         if (subEl.url.startsWith("$")) {
+                    //             allDepUrls.push(subEl.url);
+                    //         }
+                    //     });
+                    // });
+                    var allDepUrlLists = [];
+                    allDepNodes.forEach((el) => {
+                        allDepUrlLists.push(el.dependencies.nodes);
+                    });
+                    console.log(allDepUrlLists);
+                    var allDepUrlNodes = [];
+                    allDepUrlLists.forEach((el) => {
+                        el.forEach((subEl) => {
+                            if (subEl.repository != null) {
+                                allDepUrlNodes.push(subEl.repository.fundingLinks);
+                            }
+                        })
+                    });
+                    var allDepUrls = [];
+                    allDepUrlNodes.forEach((el) => {
+                        el.forEach((subEl) => {
+                            if (subEl.url.startsWith("$")) {
+                                allDepUrls.push(subEl.url);
+                            }
+                        });
+                    });
+                })
+                .catch(err => console.error(`Revshare-CRX // Error: ${err}`));
+        }
+        if (allDepUrls.length > 0 || walletLinks.length > 0) {
+            if (sponsorMeta && allDepUrls.length > 0) {
+                chosen = allDepUrls[Math.floor(Math.random() * allDepUrls.length)];
+            }
+            else if ((starsOnly && starredObj == "Unstar" || !starsOnly) && walletLinks.length > 0) {
+                chosen = walletLinks[Math.floor(Math.random() * walletLinks.length)];
+            }
             const monetizationTag = document.createElement('meta');
             monetizationTag.name = 'monetization';
             monetizationTag.content = chosen;
             document.head.appendChild(monetizationTag);
             // form meta tag, and append
         }
-        fetch('https://api.github.com/graphql', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Accept': 'application/vnd.github.hawkgirl-preview+json', 'Authorization': `Bearer ${globalThis.key}` },
-            body: JSON.stringify({ query: `{ repository(name: "${url.split("/")[4]}", owner: "${url.split("/")[3]}") {dependencyGraphManifests { nodes { dependencies { nodes { repository { fundingLinks { url } } } } } } } }` }),
-        })
-            .then(res => res.json())
-            .then(res => {
-                console.log("Revshare-CRX // Data: ", res);
-                const allDepNodes = res.data.repository.dependencyGraphManifests.nodes;
-                // allDepNodes.forEach((el) => {
-                //     allDepUrlLists = el.dependencies.nodes;
-                //     allDepUrlNodes = [];
-                //     allDepUrlLists.forEach((el) => {
-                //         el.forEach((subEl) => {
-                //             if (subEl.repository != null) {
-                //                 allDepUrlNodes.push(subEl.repository.fundingLinks);
-                //             }
-                //         });
-                //     });
-                // });
-                // var allDepUrls = [];
-                // allDepUrlNodes.forEach((el) => {
-                //     el.forEach((subEl) => {
-                //         if (subEl.url.startsWith("$")) {
-                //             allDepUrls.push(subEl.url);
-                //         }
-                //     });
-                // });
-                var allDepUrlLists = [];
-                allDepNodes.forEach((el) => {
-                    allDepUrlLists.push(el.dependencies.nodes);
-                });
-                console.log(allDepUrlLists);
-                var allDepUrlNodes = [];
-                allDepUrlLists.forEach((el) => {
-                    el.forEach((subEl) => {
-                        if (subEl.repository != null) {
-                            allDepUrlNodes.push(subEl.repository.fundingLinks);
-                        }
-                    })
-                });
-                var allDepUrls = [];
-                allDepUrlNodes.forEach((el) => {
-                    el.forEach((subEl) => {
-                        if (subEl.url.startsWith("$")) {
-                            allDepUrls.push(subEl.url);
-                        }
-                    });
-                });
-            })
-            .catch(err => console.error(`Revshare-CRX // Error: ${err}`));
     }).catch((err) => {
         console.error(`Revshare-CRX // Error: ${err}`);
     });
