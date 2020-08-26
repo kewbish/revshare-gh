@@ -1,4 +1,4 @@
-<div style="margin: 0 auto;text-align:center;"><img src="revshare-crx/icons/icon128.png"></div>
+<p align="center"><img src="revshare-crx/icons/icon128.png"></p>
 
 # Revshare.js for GitHub
 A GitHub (Chrome) extension to implement Revshare.js and Web Monetization based on repo stars.  
