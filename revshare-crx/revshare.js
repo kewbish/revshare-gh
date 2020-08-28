@@ -1,9 +1,13 @@
+// if sponsored
 const hasSponsor = document.getElementById("sponsor-button-repo");
+
+// if starsOnly set
 var starsOnly = false;
 chrome.storage.sync.get("starsOnly", (v) => {
     starsOnly = v.starsOnly;
     console.log("Revshare-CRX // Executed.");
 });
+
 if (hasSponsor) {
     console.log("Revshare-CRX // Sponsored.");
     const url = window.location.href.toString();
@@ -30,6 +34,7 @@ if (hasSponsor) {
             // either 'unstar', therefore starred, or 'star', therefore unstarred
         }
         const sponsorMeta = Math.round(Math.random());
+	console.log(`Revshare-CRX // Sponsored? ${sponsorMeta}`);
         if (sponsorMeta) {
             fetch('https://api.github.com/graphql', {
                 method: 'POST',
@@ -66,7 +71,8 @@ if (hasSponsor) {
                     }
                     else if ((starsOnly && starredObj == "Unstar" || !starsOnly) && walletLinks.length > 0) {
                         createMeta(walletLinks);
-                    }
+                    	// fallback for when dependencies don't have wallet links
+		    }
                 })
                 .catch(err => console.error(`Revshare-CRX // Error: ${err}`));
         }
