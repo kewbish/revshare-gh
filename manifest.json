@@ -1,8 +1,8 @@
 {
-    "name": "Revshare.js for GitHub",
+    "name": "Revshare for GitHub",
     "version": "0.2.0",
-    "description": "A GitHub (Chrome) extension to implement Revshare.js and Web Monetization based on repo stars.",
-    "homepage_url": "http://github.com/kewbish/revshare-crx",
+    "description": "A GitHub (Chrome) extension to implement revshare and Web Monetization based on repo stars.",
+    "homepage_url": "http://github.com/kewbish/revshare-gh",
     "permissions": [
         "activeTab",
         "storage",
@@ -14,18 +14,18 @@
                 "*://*.github.com/*/*"
             ],
             "js": [
-                "revshare-crx/key.js",
-                "revshare-crx/revshare.js"
+                "revshare-gh/key.js",
+                "revshare-gh/revshare.js"
             ]
         }
     ],
     "browser_action": {
-        "default_popup": "revshare-crx/popup.html"
+        "default_popup": "revshare-gh/popup.html"
     },
     "icons": {
-        "16": "revshare-crx/icons/icon16.png",
-        "48": "revshare-crx/icons/icon48.png",
-        "128": "revshare-crx/icons/icon128.png"
+        "16": "revshare-gh/icons/icon16.png",
+        "48": "revshare-gh/icons/icon48.png",
+        "128": "revshare-gh/icons/icon128.png"
     },
     "manifest_version": 2
 }

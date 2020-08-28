@@ -5,11 +5,11 @@ const hasSponsor = document.getElementById("sponsor-button-repo");
 var starsOnly = false;
 chrome.storage.sync.get("starsOnly", (v) => {
     starsOnly = v.starsOnly;
-    console.log("Revshare-CRX // Executed.");
+    console.log("Revshare-GH // Executed.");
 });
 
 if (hasSponsor) {
-    console.log("Revshare-CRX // Sponsored.");
+    console.log("Revshare-GH // Sponsored.");
     const url = window.location.href.toString();
     // fetch url for fragment page including all funding links
     fetch('https://api.github.com/graphql', {
@@ -28,13 +28,13 @@ if (hasSponsor) {
             }
         });
         if (starsOnly) {
-            console.log("Revshare-CRX // Stars only.");
+            console.log("Revshare-GH // Stars only.");
             var starredObj = document.getElementsByClassName("js-toggler-container js-social-container starring-container");
             starredObj = starredObj[0].innerText.split("\n")[0].trim();
             // either 'unstar', therefore starred, or 'star', therefore unstarred
         }
         const sponsorMeta = Math.round(Math.random());
-	console.log(`Revshare-CRX // Sponsored? ${sponsorMeta}`);
+	console.log(`Revshare-GH // Dependency? ${sponsorMeta}`);
         if (sponsorMeta) {
             fetch('https://api.github.com/graphql', {
                 method: 'POST',
@@ -74,13 +74,13 @@ if (hasSponsor) {
                     	// fallback for when dependencies don't have wallet links
 		    }
                 })
-                .catch(err => console.error(`Revshare-CRX // Error: ${err}`));
+                .catch(err => console.error(`Revshare-GH // Error: ${err}`));
         }
         else if ((starsOnly && starredObj == "Unstar" || !starsOnly) && walletLinks.length > 0) {
             createMeta(walletLinks);
         }
     }).catch((err) => {
-        console.error(`Revshare-CRX // Error: ${err}`);
+        console.error(`Revshare-GH // Error: ${err}`);
     });
 }
 
