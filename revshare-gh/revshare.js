@@ -31,7 +31,6 @@ function getFundingLinks() {
         body: JSON.stringify({ query: `{ repository(name: "${url.split("/")[4]}", owner: "${url.split("/")[3]}")  { fundingLinks { url } } }` }),
     }).then((res) => res.json()
     ).then((res) => {
-        console.log("Worked.");
         const links = res.data.repository.fundingLinks;
         // select each link
         links.forEach((l) => {
@@ -88,11 +87,11 @@ function getDepLinks() {
 
 if (hasSponsor) {
     console.log("Revshare-GH // Sponsored");
-    getFundingLinks.then(() => {
+    getFundingLinks().then(() => {
         const sponsorMeta = Math.round(Math.random());
 	    console.log(`Revshare-GH // Dependency? ${sponsorMeta}`);
         if (sponsorMeta) {
-            getDepLinks.then(() => {
+            getDepLinks().then(() => {
                 if (allDepUrls) {
                     createMeta(allDepUrls);
                 }
