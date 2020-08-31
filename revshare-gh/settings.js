@@ -3,6 +3,12 @@ document.addEventListener("DOMContentLoaded", () => {
     chrome.storage.sync.get("starsOnly", (v) => {
         document.getElementById("stars-only").checked = v.starsOnly;
     });
+    document.getElementById("pat").addEventListener("input", setPat);
+    chrome.storage.sync.get("pat", (pat) => {
+        if (pat) {
+            document.getElementById("pat").value = pat;
+        }
+    });
 });
 
 function setStar() {
@@ -10,4 +16,10 @@ function setStar() {
     console.log(checked.checked);
     chrome.storage.sync.set({ starsOnly: checked.checked }, () => {
     });
+}
+
+function setPat() {
+    const token = document.getElementById("pat");
+    console.log(token.value);
+    chrome.storage.sync.set({ pat: token.value }, () => {});
 }

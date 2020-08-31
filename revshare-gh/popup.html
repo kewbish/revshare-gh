@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Revshare for GitHub</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
-    <script src="setStar.js"></script>
+    <script src="settings.js"></script>
 </head>
 
 <body>
@@ -14,6 +14,15 @@
         <h1 class="title is-5 mb-1">Revshare for GitHub <img src="./icons/icon16.png" width="15px" height="15px">
         </h1>
         <label class="checkbox">Stars Only <input type="checkbox" name="Stars Only" id="stars-only"></label>
+        <div class="field">
+            <details>
+                <summary>GitHub PAT</summary>
+                <p class="mb-1">Requires the repo perms.</p>
+            </details>
+            <div class="control">
+                <input class="input is-small" type="text" value="GitHub PAT" id="pat">
+            </div>
+        </div>
         <details>
             <summary>About</summary>
             <p>A GitHub (Chrome) extension to implement revshare and Web Monetization based on
