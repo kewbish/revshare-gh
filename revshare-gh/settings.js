@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("pat").addEventListener("blur", setPat);
     chrome.storage.sync.get("pat", (pat) => {
         if (pat) {
-            document.getElementById("pat").value = parseInt(pat.pat);
+            document.getElementById("pat").value = pat.pat;
         }
     });
 });
@@ -20,5 +20,5 @@ function setStar() {
 
 function setPat() {
     const token = document.getElementById("pat");
-    chrome.storage.sync.set({ pat: parseInt(token.value, 10) }, () => {});
+    chrome.storage.sync.set({ pat: token.value }, () => {});
 }

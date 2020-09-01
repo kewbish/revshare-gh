@@ -8,3 +8,6 @@ Created by [Kewbish](https://github.com/kewbish).
 
 ## Installation
 Clone this repository, and unzip. Navigate to `chrome://extensions`, and click load unpacked. Navigate to this `.crx` file, and load the extension.
+
+## Usage
+Once installed, click the extension icon and fill in your [GitHub Personal Access Token](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token). This PAT should have the `repo` permission to access all the private repositories that you have access to.
