@@ -4,8 +4,19 @@ const hasSponsor = document.getElementById("sponsor-button-repo");
 // if starsOnly set
 var starsOnly = false;
 chrome.storage.sync.get("starsOnly", (v) => {
-    starsOnly = v.starsOnly;
-    console.log("Revshare-GH // Executed.");
+    if (typeof v.starsOnly == undefined) {
+        starsOnly = v.starsOnly;
+        console.log("Revshare-GH // Executed.");
+    }
+});
+
+// pat
+var pat = globalThis.key;
+chrome.storage.sync.get("pat", (v) => {
+    if (typeof v.pat == undefined) {
+        pat = v.pat;
+        console.log("Revshare-GH // PAT retrieved.");
+    }
 });
 
 // links variables
@@ -29,7 +40,7 @@ function getFundingLinks() {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${globalThis.key}`
+            'Authorization': `Bearer ${pat}`
         },
         body: JSON.stringify({
             query: `{ repository(name: "${url.split("/")[4]}", owner: "${url.split("/")[3]}")  { fundingLinks { url } } }`
@@ -60,7 +71,7 @@ function getDepLinks() {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/vnd.github.hawkgirl-preview+json',
-                'Authorization': `Bearer ${globalThis.key}`
+                'Authorization': `Bearer ${pat}`
             },
             body: JSON.stringify({
                 query: `{ repository(name: "${url.split("/")[4]}", owner: "${url.split("/")[3]}") {dependencyGraphManifests { nodes { dependencies { nodes { repository { fundingLinks { url } } } } } } } }`

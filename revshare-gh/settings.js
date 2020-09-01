@@ -3,10 +3,10 @@ document.addEventListener("DOMContentLoaded", () => {
     chrome.storage.sync.get("starsOnly", (v) => {
         document.getElementById("stars-only").checked = v.starsOnly;
     });
-    document.getElementById("pat").addEventListener("input", setPat);
+    document.getElementById("pat").addEventListener("blur", setPat);
     chrome.storage.sync.get("pat", (pat) => {
         if (pat) {
-            document.getElementById("pat").value = pat;
+            document.getElementById("pat").value = parseInt(pat.pat);
         }
     });
 });
@@ -20,6 +20,5 @@ function setStar() {
 
 function setPat() {
     const token = document.getElementById("pat");
-    console.log(token.value);
-    chrome.storage.sync.set({ pat: token.value }, () => {});
+    chrome.storage.sync.set({ pat: parseInt(token.value, 10) }, () => {});
 }
