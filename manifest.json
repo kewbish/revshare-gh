@@ -1,12 +1,12 @@
 {
     "name": "Revshare for GitHub",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "description": "A GitHub (Chrome) extension to implement revshare and Web Monetization based on repo stars.",
     "homepage_url": "http://github.com/kewbish/revshare-gh",
     "permissions": [
         "activeTab",
         "storage",
-        "*://*.github.com/*"
+        "*://*.github.com/*/*"
     ],
     "content_scripts": [
         {
