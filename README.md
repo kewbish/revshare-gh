@@ -28,3 +28,5 @@ If you'd like to add a funding link (and by extension the capability to be suppo
 
 > :information_source: This also applies to dependencies. If a FUNDING.yml file is found and a payment pointer is found, the pointer can be detected.
 
+## Acknowledgements
+Thank you to [Aadi](https://github.com/aadibajpai) for the idea for this extension.  
